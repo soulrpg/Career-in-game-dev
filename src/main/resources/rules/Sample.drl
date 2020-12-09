@@ -1,6 +1,75 @@
 package com.sample
  
+import javax.swing.*;
+import java.awt.*;
 import com.sample.DroolsTest.Message;
+
+global JFrame frame;
+global JLabel label;
+global JButton button;
+global JRadioButton r1;
+global JRadioButton r2;
+global JRadioButton r3;
+
+declare enum AnswerNames
+	YES_MONEY("Yes"), NO_MONEY("No");
+	fullName : String;
+end
+
+declare Answer
+	answer : AnswerNames;
+end
+
+declare Question
+	qText : String;
+	numOfAnswers : int;
+	answer1 : Answer;
+	answer2 : Answer;
+	answer3 : Answer;
+end
+
+declare ButtonClicked
+end
+
+
+rule "Ask Question"
+when
+	q : Question();
+then
+	label.setText(q.qText);
+	askQuestion(q, label, r1, r2, r3);
+end
+
+rule "Retrieve Answer"
+when
+	ButtonClicked();
+then
+	retrieveAnswer();
+end
+
+rule "Do you love Money"
+when
+	not Answer(answer == AnswerNames.YES_MONEY);
+	not Answer(answer == AnswerNames.NO_MONEY);
+then
+	System.out.println("Money");
+	Question q = new Question("Do you love money?", 2, Answer(AnswerNames.YES_MONEY), Answer(AnswerNames.NO_MONEY), null);
+	insert(q);
+end
+
+
+function void askQuestion(Question question, JLabel label, JRadioButton r1, JRadioButton r2, JRadioButton r3){
+	
+	r1.setText(question.answer1.getAnswer().getFullName());
+	r2.setText(question.answer1.getAnswer().getFullName());
+	if(question.numOfAnswers == 3){
+		r3.setText(question.answer1.getAnswer().getFullName());	
+	}
+}
+
+function void retrieveAnswer(){
+	
+}
  
 rule "Hello World"
     when
