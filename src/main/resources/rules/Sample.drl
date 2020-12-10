@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import com.sample.DroolsTest.Message;
 
-global JFrame frame;
+global JPanel panel;
 global JLabel label;
 global JButton button;
 global JRadioButton r1;
@@ -13,7 +13,7 @@ global JRadioButton r3;
 
 declare enum AnswerNames
 	YES_MONEY("Yes"), NO_MONEY("No");
-	fullName : String;
+	fullName : String
 end
 
 declare Answer
@@ -28,23 +28,26 @@ declare Question
 	answer3 : Answer;
 end
 
-declare ButtonClicked
-end
-
-
 rule "Ask Question"
 when
 	q : Question();
 then
-	label.setText(q.qText);
-	askQuestion(q, label, r1, r2, r3);
-end
-
-rule "Retrieve Answer"
-when
-	ButtonClicked();
-then
-	retrieveAnswer();
+	label.setText(q.getQText());
+	r1.setText(q.getAnswer1().getAnswer().getFullName());
+	r2.setText(q.getAnswer2().getAnswer().getFullName());
+	if(q.getNumOfAnswers() == 3){
+		r3.setText(q.getAnswer3().getAnswer().getFullName());
+		r3.setVisible(true);
+		r3.setEnabled(true);
+	}
+	else{
+		r3.setVisible(false);
+		r3.setEnabled(false);
+	}
+	int result = DroolsTest.ShowQuestion(panel, r1, r2, r3);
+	System.out.println("Question asked!");
+	System.out.println("Result: " + Integer.toString(result));
+	// Tutaj jeszce musi wstawiac odpowiedni fakt odpowiedzi na podstawie otrzymanego inta
 end
 
 rule "Do you love Money"
@@ -53,7 +56,7 @@ when
 	not Answer(answer == AnswerNames.NO_MONEY);
 then
 	System.out.println("Money");
-	Question q = new Question("Do you love money?", 2, Answer(AnswerNames.YES_MONEY), Answer(AnswerNames.NO_MONEY), null);
+	Question q = new Question("Do you love money?", 2, new Answer(AnswerNames.YES_MONEY), new Answer(AnswerNames.NO_MONEY), null);
 	insert(q);
 end
 

@@ -11,27 +11,23 @@ import java.awt.*;
 public class DroolsTest{
 
     public static final void main(String[] args) {
-    	JFrame f = new JFrame();
-    	JButton b = new JButton("Zatwierdü");
+    	JPanel panel = new JPanel();
     	JRadioButton r1 = new JRadioButton("1");
     	JRadioButton r2 = new JRadioButton("2");
     	JRadioButton r3 = new JRadioButton("3");
     	JLabel label = new JLabel("Pytanie");
+    	panel.add(label);
+    	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
+    	panel.add(r1);
+    	panel.add(r2);
+    	panel.add(r3);
         r3.setVisible(false);
         ButtonGroup bg = new ButtonGroup();
         bg.add(r1);
         bg.add(r2);
         bg.add(r3);
-    	f.add(label);
-    	f.add(r1);
-    	f.add(r2);
-    	f.add(r3);
-    	f.add(b);
-    	b.setHorizontalAlignment(JButton.CENTER);
-    	f.setSize(300, 300);
-    	f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-    	f.setVisible(true);
-    	
+        //ShowQuestion(panel);
+        
         try {
             // load up the knowledge base
 	        KieServices ks = KieServices.Factory.get();
@@ -39,12 +35,11 @@ public class DroolsTest{
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	KieRuntimeLogger kLogger = ks.getLoggers().newFileLogger(kSession, "test");
         	
-        	kSession.setGlobal( "frame", f);
+        	kSession.setGlobal( "panel", panel);
         	kSession.setGlobal( "label", label);
         	kSession.setGlobal( "r1", r1);
         	kSession.setGlobal( "r2", r2);
         	kSession.setGlobal( "r3", r3);
-        	kSession.setGlobal("button", b);
 
             // go !
             Message message = new Message();
@@ -56,6 +51,23 @@ public class DroolsTest{
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    }
+    
+    public static int ShowQuestion(JPanel panel, JRadioButton r1, JRadioButton r2, JRadioButton r3) {
+    	// Show message dialog with question and anwsers
+    	JOptionPane.showMessageDialog(null, panel, "Pytanie", JOptionPane.PLAIN_MESSAGE);
+    	if(r1.isSelected()) {
+    		return 1;
+    	}
+    	else if(r2.isSelected()) {
+    		return 2;
+    	}
+    	else if(r3.isSelected()) {
+    		return 3;
+    	}
+    	else
+    		return 0;
+    	
     }
 
     public static class Message {
