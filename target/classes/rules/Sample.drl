@@ -60,33 +60,3 @@ then
 	insert(q);
 end
 
-
-function void askQuestion(Question question, JLabel label, JRadioButton r1, JRadioButton r2, JRadioButton r3){
-	
-	r1.setText(question.answer1.getAnswer().getFullName());
-	r2.setText(question.answer1.getAnswer().getFullName());
-	if(question.numOfAnswers == 3){
-		r3.setText(question.answer1.getAnswer().getFullName());	
-	}
-}
-
-function void retrieveAnswer(){
-	
-}
- 
-rule "Hello World"
-    when
-        m : Message( status == Message.HELLO, myMessage : message )
-    then
-        System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
-        m.setStatus( Message.GOODBYE );
-        update( m );
-end
-
-rule "GoodBye"
-    when
-        Message( status == Message.GOODBYE, myMessage : message )
-    then
-        System.out.println( myMessage );
-end
