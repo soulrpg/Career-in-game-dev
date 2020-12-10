@@ -48,6 +48,17 @@ then
 	System.out.println("Question asked!");
 	System.out.println("Result: " + Integer.toString(result));
 	// Tutaj jeszce musi wstawiac odpowiedni fakt odpowiedzi na podstawie otrzymanego inta
+	if(result == 1){
+		insert(q.getAnswer1().getAnswer());
+	}
+	else if(result == 2){
+		insert(q.getAnswer2().getAnswer());
+	}
+	else if(result == 3){
+		insert(q.getAnswer3().getAnswer());
+	}
+	// Usuwa fakt pytania z pamieci (chociaz to nie jest calkowicie konieczne?)
+	retract(q);
 end
 
 rule "Do you love Money"
