@@ -1,6 +1,7 @@
 package com.sample;
 
 import org.kie.api.KieServices;
+import java.util.ArrayList;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.logger.*;
@@ -9,23 +10,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DroolsTest{
-
+	private static JPanel panel;
+	private static ArrayList<JRadioButton> buttons;
+	private static JLabel label;
+	private static ButtonGroup bg;
+	
     public static final void main(String[] args) {
-    	JPanel panel = new JPanel();
-    	JRadioButton r1 = new JRadioButton("1");
-    	JRadioButton r2 = new JRadioButton("2");
-    	JRadioButton r3 = new JRadioButton("3");
+    	panel = new JPanel();
+    	buttons = new ArrayList<JRadioButton>();
+    	label = new JLabel("Pytanie");
     	JLabel label = new JLabel("Pytanie");
     	panel.add(label);
     	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
-    	panel.add(r1);
-    	panel.add(r2);
-    	panel.add(r3);
-        r3.setVisible(false);
         ButtonGroup bg = new ButtonGroup();
-        bg.add(r1);
-        bg.add(r2);
-        bg.add(r3);
         //ShowQuestion(panel);
         
         try {
@@ -34,12 +31,6 @@ public class DroolsTest{
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	KieRuntimeLogger kLogger = ks.getLoggers().newFileLogger(kSession, "test");
-        	
-        	kSession.setGlobal( "panel", panel);
-        	kSession.setGlobal( "label", label);
-        	kSession.setGlobal( "r1", r1);
-        	kSession.setGlobal( "r2", r2);
-        	kSession.setGlobal( "r3", r3);
 
             // go !
             Message message = new Message();
@@ -53,21 +44,23 @@ public class DroolsTest{
         }
     }
     
-    public static int ShowQuestion(JPanel panel, JRadioButton r1, JRadioButton r2, JRadioButton r3) {
+    public static int ShowQuestion(String question, ArrayList<String> answers) {
     	// Show message dialog with question and anwsers
+    	buttons.clear();
+    	for(String answer : answers) {
+    		buttons.add(new JRadioButton(answer));
+    	}
+    	for(JRadioButton button : buttons) {
+    		panel.add(button);
+    		bg.add(button);
+    	}
     	JOptionPane.showMessageDialog(null, panel, "Pytanie", JOptionPane.PLAIN_MESSAGE);
-    	if(r1.isSelected()) {
-    		return 1;
+    	for(int i = 0; i < buttons.size(); i++) {
+    		if(buttons.get(i).isSelected()) {
+    			return i;
+    		}
     	}
-    	else if(r2.isSelected()) {
-    		return 2;
-    	}
-    	else if(r3.isSelected()) {
-    		return 3;
-    	}
-    	else
-    		return 0;
-    	
+    	return -1;
     }
 
     public static class Message {

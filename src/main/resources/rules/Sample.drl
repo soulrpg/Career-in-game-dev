@@ -3,13 +3,7 @@ package com.sample
 import javax.swing.*;
 import java.awt.*;
 import com.sample.DroolsTest.Message;
-
-global JPanel panel;
-global JLabel label;
-global JButton button;
-global JRadioButton r1;
-global JRadioButton r2;
-global JRadioButton r3;
+import java.util.ArrayList;
 
 declare enum AnswerNames
 	YES_MONEY("Yes"), NO_MONEY("No");
@@ -22,41 +16,35 @@ end
 
 declare Question
 	qText : String;
-	numOfAnswers : int;
-	answer1 : Answer;
-	answer2 : Answer;
-	answer3 : Answer;
+	answers : ArrayList();
+	//answers : java.util.ArrayList<Object>;
 end
 
 rule "Ask Question"
 when
 	q : Question();
 then
-	label.setText(q.getQText());
-	r1.setText(q.getAnswer1().getAnswer().getFullName());
-	r2.setText(q.getAnswer2().getAnswer().getFullName());
-	if(q.getNumOfAnswers() == 3){
-		r3.setText(q.getAnswer3().getAnswer().getFullName());
-		r3.setVisible(true);
-		r3.setEnabled(true);
+	//label.setText(q.getQText());
+	//r1.setText(q.getAnswer1().getAnswer().getFullName());
+	//r2.setText(q.getAnswer2().getAnswer().getFullName());
+	//if(q.getNumOfAnswers() == 3){
+	//	r3.setText(q.getAnswer3().getAnswer().getFullName());
+	//	r3.setVisible(true);
+	//	r3.setEnabled(true);
+	//}
+	//else{
+	//	r3.setVisible(false);
+	//	r3.setEnabled(false);
+	//}
+	ArrayList<String> answers = new ArrayList<String>();
+	for(a : q.getAnswers()){
+		answers.add(a.getAnswer().getFullName());
 	}
-	else{
-		r3.setVisible(false);
-		r3.setEnabled(false);
-	}
-	int result = DroolsTest.ShowQuestion(panel, r1, r2, r3);
+	int result = DroolsTest.ShowQuestion(q.getQText(), answers);
 	System.out.println("Question asked!");
 	System.out.println("Result: " + Integer.toString(result));
 	// Tutaj jeszce musi wstawiac odpowiedni fakt odpowiedzi na podstawie otrzymanego inta
-	if(result == 1){
-		insert(q.getAnswer1().getAnswer());
-	}
-	else if(result == 2){
-		insert(q.getAnswer2().getAnswer());
-	}
-	else if(result == 3){
-		insert(q.getAnswer3().getAnswer());
-	}
+	insert Answer(q.getAnswers().get(result));
 	// Usuwa fakt pytania z pamieci (chociaz to nie jest calkowicie konieczne?)
 	retract(q);
 end
@@ -67,7 +55,10 @@ when
 	not Answer(answer == AnswerNames.NO_MONEY);
 then
 	System.out.println("Money");
-	Question q = new Question("Do you love money?", 2, new Answer(AnswerNames.YES_MONEY), new Answer(AnswerNames.NO_MONEY), null);
+	ArrayList<Object> answers_tmp = new ArrayList<Answer>();
+	answers_tmp.add(new Answer(AnswerNames.YES_MONEY));
+	answers_tmp.add(new Answer(AnswerNames.NO_MONEY));
+	Question q = new Question("Do you love money?", answers_tmp);
 	insert(q);
 end
 
