@@ -19,10 +19,9 @@ public class DroolsTest{
     	panel = new JPanel();
     	buttons = new ArrayList<JRadioButton>();
     	label = new JLabel("Pytanie");
-    	JLabel label = new JLabel("Pytanie");
     	panel.add(label);
     	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
-        ButtonGroup bg = new ButtonGroup();
+        bg = new ButtonGroup();
         //ShowQuestion(panel);
         
         try {
@@ -46,7 +45,12 @@ public class DroolsTest{
     
     public static int ShowQuestion(String question, ArrayList<String> answers) {
     	// Show message dialog with question and anwsers
+    	for(JRadioButton button : buttons) {
+    		panel.remove(button);
+    		bg.remove(button);
+    	}
     	buttons.clear();
+    	label.setText(question);
     	for(String answer : answers) {
     		buttons.add(new JRadioButton(answer));
     	}

@@ -6,7 +6,7 @@ import com.sample.DroolsTest.Message;
 import java.util.ArrayList;
 
 declare enum AnswerNames
-	YES_MONEY("Yes"), NO_MONEY("No");
+	YES_MONEY("Yes"), NO_MONEY("No"), YES_TALENT("Yes"), NO_TALENT("No");
 	fullName : String
 end
 
@@ -16,35 +16,23 @@ end
 
 declare Question
 	qText : String;
-	answers : ArrayList();
-	//answers : java.util.ArrayList<Object>;
+	answers : ArrayList;
 end
 
 rule "Ask Question"
 when
 	q : Question();
 then
-	//label.setText(q.getQText());
-	//r1.setText(q.getAnswer1().getAnswer().getFullName());
-	//r2.setText(q.getAnswer2().getAnswer().getFullName());
-	//if(q.getNumOfAnswers() == 3){
-	//	r3.setText(q.getAnswer3().getAnswer().getFullName());
-	//	r3.setVisible(true);
-	//	r3.setEnabled(true);
-	//}
-	//else{
-	//	r3.setVisible(false);
-	//	r3.setEnabled(false);
-	//}
 	ArrayList<String> answers = new ArrayList<String>();
-	for(a : q.getAnswers()){
-		answers.add(a.getAnswer().getFullName());
+	for(Object a : q.getAnswers()){
+		answers.add(((Answer)a).getAnswer().getFullName());
 	}
 	int result = DroolsTest.ShowQuestion(q.getQText(), answers);
 	System.out.println("Question asked!");
 	System.out.println("Result: " + Integer.toString(result));
 	// Tutaj jeszce musi wstawiac odpowiedni fakt odpowiedzi na podstawie otrzymanego inta
-	insert Answer(q.getAnswers().get(result));
+	Answer userAnswer = (Answer)q.getAnswers().get(result);
+	insert(userAnswer);
 	// Usuwa fakt pytania z pamieci (chociaz to nie jest calkowicie konieczne?)
 	retract(q);
 end
@@ -55,10 +43,24 @@ when
 	not Answer(answer == AnswerNames.NO_MONEY);
 then
 	System.out.println("Money");
-	ArrayList<Object> answers_tmp = new ArrayList<Answer>();
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
 	answers_tmp.add(new Answer(AnswerNames.YES_MONEY));
 	answers_tmp.add(new Answer(AnswerNames.NO_MONEY));
 	Question q = new Question("Do you love money?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you have exceptional talent"
+when
+	not Answer(answer == AnswerNames.YES_TALENT);
+	not Answer(answer == AnswerNames.NO_TALENT);
+	Answer(answer == AnswerNames.NO_MONEY); 
+then
+	System.out.println("Talent");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
+	answers_tmp.add(new Answer(AnswerNames.YES_TALENT));
+	answers_tmp.add(new Answer(AnswerNames.NO_TALENT));
+	Question q = new Question("Do you have exceptional talent?", answers_tmp);
 	insert(q);
 end
 
