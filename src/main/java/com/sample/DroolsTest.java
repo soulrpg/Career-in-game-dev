@@ -30,12 +30,7 @@ public class DroolsTest{
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	KieRuntimeLogger kLogger = ks.getLoggers().newFileLogger(kSession, "test");
-
             // go !
-            Message message = new Message();
-            message.setMessage("Hello World");
-            message.setStatus(Message.HELLO);
-            kSession.insert(message);
             kSession.fireAllRules();
             kLogger.close();
         } catch (Throwable t) {
@@ -66,33 +61,4 @@ public class DroolsTest{
     	}
     	return -1;
     }
-
-    public static class Message {
-
-        public static final int HELLO = 0;
-        public static final int GOODBYE = 1;
-
-        private String message;
-
-        private int status;
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public int getStatus() {
-            return this.status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-    }
-    
-
 }

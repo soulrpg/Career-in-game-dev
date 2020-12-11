@@ -2,7 +2,6 @@ package com.sample
  
 import javax.swing.*;
 import java.awt.*;
-import com.sample.DroolsTest.Message;
 import java.util.ArrayList;
 
 declare enum AnswerNames
