@@ -1,0 +1,369 @@
+rule "Consultant"
+when
+	Answer(answer == AnswerNames.YES_RESPONSIBILITY); 
+then
+	System.out.println("Consultant");
+	Result r = new Result("You should become Consultant");
+	insert(r);
+end
+
+rule "You 're shit out of luck"
+when
+	Answer(answer == AnswerNames.NO_CODE); 
+then
+	System.out.println("You 're shit out of luck");
+	Result r = new Result("You should become You 're shit out of luck");
+	insert(r);
+end
+
+rule "Technical Lead"
+when
+	Answer(answer == AnswerNames.WHILE_CODE); 
+then
+	System.out.println("Technical Lead");
+	Result r = new Result("You should become Technical Lead");
+	insert(r);
+end
+
+rule "Programmer"
+when
+	Answer(answer == AnswerNames.YES_CODE); 
+then
+	System.out.println("Programmer");
+	Result r = new Result("You should become Programmer");
+	insert(r);
+end
+
+rule "Creative Director"
+when
+	Answer(answer == AnswerNames.YES_GRANDVISION); 
+then
+	System.out.println("Creative Director");
+	Result r = new Result("You should become Creative Director");
+	insert(r);
+end
+
+rule "Producer"
+when
+	Answer(answer == AnswerNames.NO_HAVEMONEY); 
+then
+	System.out.println("Producer");
+	Result r = new Result("You should become Producer");
+	insert(r);
+end
+
+rule "Social Games Studio Head"
+when
+	Answer(answer == AnswerNames.NO_CONSCIENCE); 
+then
+	System.out.println("Social Games Studio Head");
+	Result r = new Result("You should become Social Games Studio Head");
+	insert(r);
+end
+
+rule "Studio Head"
+when
+	Answer(answer == AnswerNames.YES_CONSCIENCE); 
+then
+	System.out.println("Studio Head");
+	Result r = new Result("You should become Studio Head");
+	insert(r);
+end
+
+rule "Game Critic"
+when
+	Answer(answer == AnswerNames.YES_BITTER); 
+then
+	System.out.println("Game Critic");
+	Result r = new Result("You should become Game Critic");
+	insert(r);
+end
+
+rule "Game Reviewer"
+when
+	Answer(answer == AnswerNames.NO_BITTER); 
+then
+	System.out.println("Game Reviewer");
+	Result r = new Result("You should become Game Reviewer");
+	insert(r);
+end
+
+rule "Marketer"
+when
+	Answer(answer == AnswerNames.NAH_IDEAS); 
+then
+	System.out.println("Marketer");
+	Result r = new Result("You should become Marketer");
+	insert(r);
+end
+
+rule "Social Games Studio Employee"
+when
+	Answer(answer == AnswerNames.NO_GAMES_IMPORTANT); 
+then
+	System.out.println("Social Games Studio Employee");
+	Result r = new Result("You should become Social Games Studio Employee");
+	insert(r);
+end
+
+rule "Indie Developer"
+when
+	Answer(answer == AnswerNames.YES_GAMESINDIE); 
+then
+	System.out.println("Indie Developer");
+	Result r = new Result("You should become Indie Developer");
+	insert(r);
+end
+
+rule "Blogger"
+when
+	Answer(answer == AnswerNames.YES_GRAMMAR); 
+then
+	System.out.println("Blogger");
+	Result r = new Result("You should become Blogger");
+	insert(r);
+end
+
+rule "Gamer"
+when
+	Answer(answer == AnswerNames.NO_GAMESPLAYING/NO_ASIA); 
+then
+	System.out.println("Gamer");
+	Result r = new Result("You should become Gamer");
+	insert(r);
+end
+
+rule "Starcraft Cyberathlete"
+when
+	Answer(answer == AnswerNames.YES_KOREA); 
+then
+	System.out.println("Starcraft Cyberathlete");
+	Result r = new Result("You should become Starcraft Cyberathlete");
+	insert(r);
+end
+
+rule "Gold Farmer"
+when
+	Answer(answer == AnswerNames.YES_CHINA); 
+then
+	System.out.println("Gold Farmer");
+	Result r = new Result("You should become Gold Farmer");
+	insert(r);
+end
+
+rule "Art Director"
+when
+	Answer(answer == AnswerNames.NO_PREFERWORKING); 
+then
+	System.out.println("Art Director");
+	Result r = new Result("You should become Art Director");
+	insert(r);
+end
+
+rule "Animator"
+when
+	Answer(answer == AnswerNames.YES_SPENDWEEKSONSECONDS); 
+then
+	System.out.println("Animator");
+	Result r = new Result("You should become Animator");
+	insert(r);
+end
+
+rule "3d Artist"
+when
+	Answer(answer == AnswerNames.NO_SPENDWEEKSONSECONDS); 
+then
+	System.out.println("3d Artist");
+	Result r = new Result("You should become 3d Artist");
+	insert(r);
+end
+
+rule "Concept Artist"
+when
+	Answer(answer == AnswerNames.YES_ASIAN); 
+then
+	System.out.println("Concept Artist");
+	Result r = new Result("You should become Concept Artist");
+	insert(r);
+end
+
+rule "Comic Artist"
+when
+	Answer(answer == AnswerNames.YES_FRENCH); 
+then
+	System.out.println("Comic Artist");
+	Result r = new Result("You should become Comic Artist");
+	insert(r);
+end
+
+rule "2d Artist"
+when
+	Answer(answer == AnswerNames.NO_ENJOYCRATES); 
+then
+	System.out.println("2d Artist");
+	Result r = new Result("You should become 2d Artist");
+	insert(r);
+end
+
+rule "Environmental Artist"
+when
+	Answer(answer == AnswerNames.YES_ENJOYCRATES); 
+then
+	System.out.println("Environmental Artist");
+	Result r = new Result("You should become Environmental Artist");
+	insert(r);
+end
+
+rule "Level Designer"
+when
+	Answer(answer == AnswerNames.YES_WORKUNFINISHEDTOOLS); 
+then
+	System.out.println("Level Designer");
+	Result r = new Result("You should become Level Designer");
+	insert(r);
+end
+
+rule "Writer"
+when
+	Answer(answer == AnswerNames.NO_SPEAKSPREADSHEET); 
+then
+	System.out.println("Writer");
+	Result r = new Result("You should become Writer");
+	insert(r);
+end
+
+rule "Lead Game Designer"
+when
+	Answer(answer == AnswerNames.NO_TOLDWHATTODO); 
+then
+	System.out.println("Lead Game Designer");
+	Result r = new Result("You should become Lead Game Designer");
+	insert(r);
+end
+
+rule "Event Scripter"
+when
+	Answer(answer == AnswerNames.NO_OBSESSOVERDETAIL); 
+then
+	System.out.println("Event Scripter");
+	Result r = new Result("You should become Event Scripter");
+	insert(r);
+end
+
+rule "Game Designer"
+when
+	Answer(answer == AnswerNames.NO_FIXIATIONGOREBLOOD); 
+then
+	System.out.println("Game Designer");
+	Result r = new Result("You should become Game Designer");
+	insert(r);
+end
+
+rule "Combat Designer"
+when
+	Answer(answer == AnswerNames.YES_FIXIATIONGOREBLOOD); 
+then
+	System.out.println("Combat Designer");
+	Result r = new Result("You should become Combat Designer");
+	insert(r);
+end
+
+rule "Office IT"
+when
+	Answer(answer == AnswerNames.NO_MUSICAL); 
+then
+	System.out.println("Office IT");
+	Result r = new Result("You should become Office IT");
+	insert(r);
+end
+
+rule "Composer"
+when
+	Answer(answer == AnswerNames.NO_BLOWTHINGS); 
+then
+	System.out.println("Composer");
+	Result r = new Result("You should become Composer");
+	insert(r);
+end
+
+rule "Sound designer"
+when
+	Answer(answer == AnswerNames.YES_BLOWTHINGS); 
+then
+	System.out.println("Sound designer");
+	Result r = new Result("You should become Sound designer");
+	insert(r);
+end
+
+rule "Quality Assurance"
+when
+	Answer(answer == AnswerNames.YES_MINDERRORS); 
+then
+	System.out.println("Quality Assurance");
+	Result r = new Result("You should become Quality Assurance");
+	insert(r);
+end
+
+rule "Voice Actor"
+when
+	Answer(answer == AnswerNames.YES_CELEBRITY); 
+then
+	System.out.println("Voice Actor");
+	Result r = new Result("You should become Voice Actor");
+	insert(r);
+end
+
+rule "Motion Capture Actor"
+when
+	Answer(answer == AnswerNames.NO_YOUNGHOT); 
+then
+	System.out.println("Motion Capture Actor");
+	Result r = new Result("You should become Motion Capture Actor");
+	insert(r);
+end
+
+rule "Military Shooter Packaging Model"
+when
+	Answer(answer == AnswerNames.YES_MALE); 
+then
+	System.out.println("Military Shooter Packaging Model");
+	Result r = new Result("You should become Military Shooter Packaging Model");
+	insert(r);
+end
+
+rule "Cosplayer"
+when
+	Answer(answer == AnswerNames.YES_ARTSCRAFTS); 
+then
+	System.out.println("Cosplayer");
+	Result r = new Result("You should become Cosplayer");
+	insert(r);
+end
+
+rule "Booth Babe"
+when
+	Answer(answer == AnswerNames.NO_ARTSCRAFTS); 
+then
+	System.out.println("Booth Babe");
+	Result r = new Result("You should become Booth Babe");
+	insert(r);
+end
+
+rule "Guild Leader"
+when
+	Answer(answer == AnswerNames.YES_CHOSEWHOHANGOUT); 
+then
+	System.out.println("Guild Leader");
+	Result r = new Result("You should become Guild Leader");
+	insert(r);
+end
+
+rule "Community Manager"
+when
+	Answer(answer == AnswerNames.NO_CHOSEWHOHANGOUT); 
+then
+	System.out.println("Community Manager");
+	Result r = new Result("You should become Community Manager");
+	insert(r);
+end
+
