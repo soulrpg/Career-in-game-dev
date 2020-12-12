@@ -61,4 +61,16 @@ public class DroolsTest{
     	}
     	return -1;
     }
+    
+    public static int ShowResult(String question, String windowTitle) {
+    	// Show message dialog with result
+    	for(JRadioButton button : buttons) {
+    		panel.remove(button);
+    		bg.remove(button);
+    	}
+    	buttons.clear();
+    	label.setText(question);
+    	JOptionPane.showMessageDialog(null, panel, windowTitle, JOptionPane.PLAIN_MESSAGE);
+    	return -1;
+    }
 }

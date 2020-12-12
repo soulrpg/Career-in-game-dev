@@ -1,0 +1,39 @@
+Do you love money;LOVEMONEY; 
+Do you have exceptional talent;TALENT;NO_LOVEMONEY
+Are yo bitter about it;BITTER;NO_TALENT
+Can you get excited for other peoples' ideas;IDEAS;YES_TALENT
+Do you like doing productive work;PRODUCTIVE;YES_LOVEMONEY
+Can you code;CODE;YES_PRODUCTIVE
+Are you afraid of responsibility;RESPONSIBILITY;NO_PRODUCTIVE
+Do you have a "grand vision";GRANDVISION;NO_RESPONSIBILITY
+Do you have any money;HAVEMONEY;No_GRANDVISION
+Do you gave a conscience;CONSCIENCE;YES_HAVEMONEY
+Really;REALLY;YES_IDEAS
+Do you mind being underappreciated;MINDUNDERAPPRECIATED;;YES_REALLY
+Do you think games are important;GAMESIMPORTANT;NO_REALLY
+Can you make games on your own;GAMESINDIE;YES_GAMESIMPORTANT
+Do you know basic grammar;GRAMMAR;NO_GAMESINDIE
+Are you at least good at playing games;GAMESPLAYING;NO_GRAMMAR
+Are you from Asia;ASIA;YES_GAMESPLAYING
+Are you visually oriented;VISUALLYORIENTED;YES_MINDUNDERAPPRECIATED
+Do you prefer working over talking;PREFERWORKING;YES_VISUALLYORIENTED
+Would you rather be a "proper" artist;PROPERARTIST;YES_PREFERWORKING
+Are you French;FRENCH;YES_PROPERARTIST
+Asian;ASIAN;NO_FRENCH
+Do you enjoy crafting crates;ENJOYCRATES;NO_ASIAN
+Want to spend two weeks on two seconds;SPENDWEEKSONSECONDS;NO_PROPERARTIST
+Do you like to work with unfinished tools;WORKUNFINISHEDTOOLS;NO_VISUALLYORIENTED
+Do you speak Spreadsheet;SPEAKSPREADSHEET;NO_WORKUNFINISHEDTOOLS
+Do you want to be told what to do;TOLDWHATTODO;YES_SPEAKSPREADSHEET
+Do you obsess excessively over even the tiniest details;OBSESSOVERDETAIL;YES_TOLDWHATTODO
+Do you have a fixiation on gore and blood;FIXIATIONGOREBLOOD;YES_OBSESSOVERDETAIL
+Do you like to be alone;BEALONE;NO_MINDUNDERAPPRECIATED
+Are you musical;MUSICAL;YES_BEALONE
+Do you like to shoot or blow things up;BLOWTHINGS;YES_MUSICAL
+Would you rather be in the movies;BEINMOVIES;NO_ALONE
+You a TV or movie celebrity;CELEBRITY;YES_BEINMOVIES
+Are you young, caucasian and hot;YOUNGHOT;NO_CELEBRITY
+Are you male;MALE;YES_YOUNGHOT
+Do you like arts and crafts;ARTSCRAFTS;NO_MALE
+Did you mind the errors in this graph;MINDERRORS;NO_BEINMOVIES
+Do you want to chose who to hang out with;CHOSEWHOHANGOUT;NO_MINDERRORS

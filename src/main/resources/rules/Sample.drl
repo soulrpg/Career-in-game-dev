@@ -3,9 +3,29 @@ package com.sample
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import static java.util.Arrays.asList;
 
 declare enum AnswerNames
-	YES_MONEY("Yes"), NO_MONEY("No"), YES_TALENT("Yes"), NO_TALENT("No");
+	YES_LOVEMONEY("Yes"), NO_LOVEMONEY("No"), YES_TALENT("Yes"), NO_TALENT("No"), YES_BITTER("Yes"), NO_BITTER("No"),
+	YES_PRODUCTIVE("Yes"), NO_PRODUCTIVE("No"), 
+	YES_RESPONSIBILITY("Yes"), NO_RESPONSIBILITY("No"), YES_GRANDVISION("Yes"),
+	NO_GRANDVISION("No"), YES_HAVEMONEY("Yes"), NO_HAVEMONEY("No"), YES_CONSCIENCE("Yes"), NO_CONSCIENCE("No"),
+	YES_REALLY("Yes"), NO_REALLY("No"), YES_MINDUNDERAPPRECIATED("Yes"), NO_MINDUNDERAPPRECIATED("No"),
+	YES_GAMESINDIE("Yes"), NO_GAMESINDIE("No"),
+	YES_GRAMMAR("Yes"), NO_GRAMMAR("No"), YES_GAMESPLAYING("Yes"), NO_GAMESPLAYING("No"), YES_VISUALLYORIENTED("Yes"), NO_VISUALLYORIENTED("No"), YES_PREFERWORKING("Yes"),
+	NO_PREFERWORKING("No"), YES_PROPERARTIST("Yes"), NO_PROPERARTIST("No"), YES_FRENCH("Yes"),
+	NO_FRENCH("No"), YES_ASIAN("Yes"), NO_ASIAN("No"), YES_ENJOYCRATES("Yes"), NO_ENJOYCRATES("No"), YES_SPENDWEEKSONSECONDS("Yes"), 
+	NO_SPENDWEEKSONSECONDS("No"), YES_WORKUNFINISHEDTOOLS("Yes"), NO_WORKUNFINISHEDTOOLS("No"), YES_SPEAKSPREADSHEET("Yes"), 
+	NO_SPEAKSPREADSHEET("No"), YES_TOLDWHATTODO("Yes"), NO_TOLDWHATTODO("No"), YES_OBSESSOVERDETAIL("Yes"), 
+	NO_OBSESSOVERDETAIL("No"), YES_FIXIATIONGOREBLOOD("Yes"), NO_FIXIATIONGOREBLOOD("No"), YES_BEALONE("Yes"), 
+	NO_BEALONE("No"), YES_MUSICAL("Yes"), NO_MUSICAL("No"), YES_BLOWTHINGS("Yes"), NO_BLOWTHINGS("No"), 
+	YES_BEINMOVIES("Yes"), NO_BEINMOVIES("No"), YES_CELEBRITY("Yes"), NO_CELEBRITY("No"), YES_YOUNGHOT("Yes"), 
+	NO_YOUNGHOT("No"), YES_MALE("Yes"), NO_MALE("No"), YES_ARTSCRAFTS("Yes"), NO_ARTSCRAFTS("No"), YES_MINDERRORS("Yes"), 
+	NO_MINDERRORS("No"), YES_CHOSEWHOHANGOUT("Yes"), NO_CHOSEWHOHANGOUT("No"),
+	//////////////////////////////////////////////////////
+	YES_CHINA("Yes, China"), YES_KOREA("Yes, Korea"), 
+	NO_ASIA("No"), YES_GAMES_IMPORTANT("Yes"), NO_GAMES_IMPORTANT("No"), YES_CODE("Yes"), NO_CODE("Yes"), WHILE_CODE("Well... it's been a while"),
+	YES_IDEAS("Yes"), NO_IDEAS("No"), NAH_IDEAS("Nah, but I can fake it");
 	fullName : String
 end
 
@@ -16,6 +36,10 @@ end
 declare Question
 	qText : String;
 	answers : ArrayList;
+end
+
+declare Result
+	rText : String
 end
 
 rule "Ask Question"
@@ -36,15 +60,88 @@ then
 	retract(q);
 end
 
-rule "Do you love Money"
+rule "Show Result"
 when
-	not Answer(answer == AnswerNames.YES_MONEY);
-	not Answer(answer == AnswerNames.NO_MONEY);
+	r : Result();
 then
-	System.out.println("Money");
+	DroolsTest.ShowResult(r.getRText(), "Wynik");
+	retract(r);
+end
+
+rule "Do you think games are important"
+when
+	not Answer(answer == AnswerNames.NO_GAMES_IMPORTANT);
+	not Answer(answer == AnswerNames.YES_GAMES_IMPORTANT);
+	Answer(answer == AnswerNames.NO_IDEAS);
+	or
+	Answer(answer == AnswerNames.NO_REALLY); 
+then
+	System.out.println("Games important");
 	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
-	answers_tmp.add(new Answer(AnswerNames.YES_MONEY));
-	answers_tmp.add(new Answer(AnswerNames.NO_MONEY));
+	answers_tmp.add(new Answer(AnswerNames.YES_GAMES_IMPORTANT));
+	answers_tmp.add(new Answer(AnswerNames.NO_GAMES_IMPORTANT));
+	Question q = new Question("Do you think games are important?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you from Asia"
+when
+	not Answer(answer == AnswerNames.YES_CHINA);
+	not Answer(answer == AnswerNames.YES_KOREA);
+	not Answer(answer == AnswerNames.NO_ASIA);
+	Answer(answer == AnswerNames.YES_GAMESPLAYING);
+then 
+	System.out.println("From Asia");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
+	answers_tmp.add(new Answer(AnswerNames.YES_CHINA));
+	answers_tmp.add(new Answer(AnswerNames.YES_KOREA));
+	answers_tmp.add(new Answer(AnswerNames.NO_ASIA));
+	Question q = new Question("Are you from Asia?", answers_tmp);
+	insert(q);
+end
+
+rule "Can you code"
+when
+	not Answer(answer == AnswerNames.YES_CODE);
+	not Answer(answer == AnswerNames.NO_CODE);
+	not Answer(answer == AnswerNames.WHILE_CODE);
+	Answer(answer == AnswerNames.YES_PRODUCTIVE);
+then
+	System.out.println("Code");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
+	answers_tmp.add(new Answer(AnswerNames.YES_CODE));
+	answers_tmp.add(new Answer(AnswerNames.NO_CODE));
+	answers_tmp.add(new Answer(AnswerNames.WHILE_CODE));
+	Question q = new Question("Can you code?", answers_tmp);
+	insert(q);
+end
+
+rule "Can you get excited for other poeple's ideas"
+when
+	not Answer(answer == AnswerNames.YES_IDEAS);
+	not Answer(answer == AnswerNames.NO_IDEAS);
+	not Answer(answer == AnswerNames.NAH_IDEAS);
+	Answer(answer == AnswerNames.YES_TALENT);
+then
+	System.out.println("Ideas");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
+	answers_tmp.add(new Answer(AnswerNames.YES_IDEAS));
+	answers_tmp.add(new Answer(AnswerNames.NO_IDEAS));
+	answers_tmp.add(new Answer(AnswerNames.NAH_IDEAS));
+	Question q = new Question("Can you get excited for other people's ideas?", answers_tmp);
+	insert(q);
+end
+
+////////////////////////////////////////////////////////////
+
+rule "Do you love money"
+when
+	not Answer(answer == AnswerNames.YES_LOVEMONEY);
+	not Answer(answer == AnswerNames.NO_LOVEMONEY);
+then
+	System.out.println("LOVEMONEY");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_LOVEMONEY),new Answer(AnswerNames.NO_LOVEMONEY)));
+	
 	Question q = new Question("Do you love money?", answers_tmp);
 	insert(q);
 end
@@ -53,13 +150,462 @@ rule "Do you have exceptional talent"
 when
 	not Answer(answer == AnswerNames.YES_TALENT);
 	not Answer(answer == AnswerNames.NO_TALENT);
-	Answer(answer == AnswerNames.NO_MONEY); 
+	Answer(answer == AnswerNames.NO_LOVEMONEY); 
 then
-	System.out.println("Talent");
-	ArrayList<Answer> answers_tmp = new ArrayList<Answer>();
-	answers_tmp.add(new Answer(AnswerNames.YES_TALENT));
-	answers_tmp.add(new Answer(AnswerNames.NO_TALENT));
+	System.out.println("TALENT");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_TALENT),new Answer(AnswerNames.NO_TALENT)));
+	
 	Question q = new Question("Do you have exceptional talent?", answers_tmp);
 	insert(q);
 end
 
+rule "Are yo bitter about it"
+when
+	not Answer(answer == AnswerNames.YES_BITTER);
+	not Answer(answer == AnswerNames.NO_BITTER);
+	Answer(answer == AnswerNames.NO_TALENT); 
+then
+	System.out.println("BITTER");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_BITTER),new Answer(AnswerNames.NO_BITTER)));
+	
+	Question q = new Question("Are yo bitter about it?", answers_tmp);
+	insert(q);
+end
+
+rule "Can you get excited for other peoples' ideas"
+when
+	not Answer(answer == AnswerNames.YES_IDEAS);
+	not Answer(answer == AnswerNames.NO_IDEAS);
+	Answer(answer == AnswerNames.YES_TALENT); 
+then
+	System.out.println("IDEAS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_IDEAS),new Answer(AnswerNames.NO_IDEAS)));
+	
+	Question q = new Question("Can you get excited for other peoples' ideas?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you like doing productive work"
+when
+	not Answer(answer == AnswerNames.YES_PRODUCTIVE);
+	not Answer(answer == AnswerNames.NO_PRODUCTIVE);
+	Answer(answer == AnswerNames.YES_LOVEMONEY); 
+then
+	System.out.println("PRODUCTIVE");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_PRODUCTIVE),new Answer(AnswerNames.NO_PRODUCTIVE)));
+	
+	Question q = new Question("Do you like doing productive work?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you afraid of responsibility"
+when
+	not Answer(answer == AnswerNames.YES_RESPONSIBILITY);
+	not Answer(answer == AnswerNames.NO_RESPONSIBILITY);
+	Answer(answer == AnswerNames.NO_PRODUCTIVE); 
+then
+	System.out.println("RESPONSIBILITY");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_RESPONSIBILITY),new Answer(AnswerNames.NO_RESPONSIBILITY)));
+	
+	Question q = new Question("Are you afraid of responsibility?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you have a grand vision"
+when
+	not Answer(answer == AnswerNames.YES_GRANDVISION);
+	not Answer(answer == AnswerNames.NO_GRANDVISION);
+	Answer(answer == AnswerNames.NO_RESPONSIBILITY); 
+then
+	System.out.println("GRANDVISION");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_GRANDVISION),new Answer(AnswerNames.NO_GRANDVISION)));
+	
+	Question q = new Question("Do you have a \"grand vision\"?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you have any money"
+when
+	not Answer(answer == AnswerNames.YES_HAVEMONEY);
+	not Answer(answer == AnswerNames.NO_HAVEMONEY);
+	Answer(answer == AnswerNames.NO_GRANDVISION); 
+then
+	System.out.println("HAVEMONEY");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_HAVEMONEY),new Answer(AnswerNames.NO_HAVEMONEY)));
+	
+	Question q = new Question("Do you have any money?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you gave a conscience"
+when
+	not Answer(answer == AnswerNames.YES_CONSCIENCE);
+	not Answer(answer == AnswerNames.NO_CONSCIENCE);
+	Answer(answer == AnswerNames.YES_HAVEMONEY); 
+then
+	System.out.println("CONSCIENCE");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_CONSCIENCE),new Answer(AnswerNames.NO_CONSCIENCE)));
+	
+	Question q = new Question("Do you gave a conscience?", answers_tmp);
+	insert(q);
+end
+
+rule "Really"
+when
+	not Answer(answer == AnswerNames.YES_REALLY);
+	not Answer(answer == AnswerNames.NO_REALLY);
+	Answer(answer == AnswerNames.YES_IDEAS); 
+then
+	System.out.println("REALLY");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_REALLY),new Answer(AnswerNames.NO_REALLY)));
+	
+	Question q = new Question("Really?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you mind being underappreciated"
+when
+	not Answer(answer == AnswerNames.YES_MINDUNDERAPPRECIATED);
+	not Answer(answer == AnswerNames.NO_MINDUNDERAPPRECIATED);
+	Answer(answer == AnswerNames.YES_REALLY); 
+then
+	System.out.println("MINDUNDERAPPRECIATED");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_MINDUNDERAPPRECIATED),new Answer(AnswerNames.NO_MINDUNDERAPPRECIATED)));
+	
+	Question q = new Question("Do you mind being underappreciated?", answers_tmp);
+	insert(q);
+end
+
+rule "Can you make games on your own"
+when
+	not Answer(answer == AnswerNames.YES_GAMESINDIE);
+	not Answer(answer == AnswerNames.NO_GAMESINDIE);
+	Answer(answer == AnswerNames.YES_GAMES_IMPORTANT); 
+then
+	System.out.println("GAMESINDIE");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_GAMESINDIE),new Answer(AnswerNames.NO_GAMESINDIE)));
+	
+	Question q = new Question("Can you make games on your own?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you know basic grammar"
+when
+	not Answer(answer == AnswerNames.YES_GRAMMAR);
+	not Answer(answer == AnswerNames.NO_GRAMMAR);
+	Answer(answer == AnswerNames.NO_GAMESINDIE); 
+then
+	System.out.println("GRAMMAR");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_GRAMMAR),new Answer(AnswerNames.NO_GRAMMAR)));
+	
+	Question q = new Question("Do you know basic grammar?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you at least good at playing games"
+when
+	not Answer(answer == AnswerNames.YES_GAMESPLAYING);
+	not Answer(answer == AnswerNames.NO_GAMESPLAYING);
+	Answer(answer == AnswerNames.NO_GRAMMAR); 
+then
+	System.out.println("GAMESPLAYING");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_GAMESPLAYING),new Answer(AnswerNames.NO_GAMESPLAYING)));
+	
+	Question q = new Question("Are you at least good at playing games?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you visually oriented"
+when
+	not Answer(answer == AnswerNames.YES_VISUALLYORIENTED);
+	not Answer(answer == AnswerNames.NO_VISUALLYORIENTED);
+	Answer(answer == AnswerNames.YES_MINDUNDERAPPRECIATED); 
+then
+	System.out.println("VISUALLYORIENTED");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_VISUALLYORIENTED),new Answer(AnswerNames.NO_VISUALLYORIENTED)));
+	
+	Question q = new Question("Are you visually oriented?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you prefer working over talking"
+when
+	not Answer(answer == AnswerNames.YES_PREFERWORKING);
+	not Answer(answer == AnswerNames.NO_PREFERWORKING);
+	Answer(answer == AnswerNames.YES_VISUALLYORIENTED); 
+then
+	System.out.println("PREFERWORKING");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_PREFERWORKING),new Answer(AnswerNames.NO_PREFERWORKING)));
+	
+	Question q = new Question("Do you prefer working over talking?", answers_tmp);
+	insert(q);
+end
+
+rule "Would you rather be a proper artist"
+when
+	not Answer(answer == AnswerNames.YES_PROPERARTIST);
+	not Answer(answer == AnswerNames.NO_PROPERARTIST);
+	Answer(answer == AnswerNames.YES_PREFERWORKING); 
+then
+	System.out.println("PROPERARTIST");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_PROPERARTIST),new Answer(AnswerNames.NO_PROPERARTIST)));
+	
+	Question q = new Question("Would you rather be a \"proper\" artist?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you French"
+when
+	not Answer(answer == AnswerNames.YES_FRENCH);
+	not Answer(answer == AnswerNames.NO_FRENCH);
+	Answer(answer == AnswerNames.YES_PROPERARTIST); 
+then
+	System.out.println("FRENCH");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_FRENCH),new Answer(AnswerNames.NO_FRENCH)));
+	
+	Question q = new Question("Are you French?", answers_tmp);
+	insert(q);
+end
+
+rule "Asian"
+when
+	not Answer(answer == AnswerNames.YES_ASIAN);
+	not Answer(answer == AnswerNames.NO_ASIAN);
+	Answer(answer == AnswerNames.NO_FRENCH); 
+then
+	System.out.println("ASIAN");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_ASIAN),new Answer(AnswerNames.NO_ASIAN)));
+	
+	Question q = new Question("Asian?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you enjoy crafting crates"
+when
+	not Answer(answer == AnswerNames.YES_ENJOYCRATES);
+	not Answer(answer == AnswerNames.NO_ENJOYCRATES);
+	Answer(answer == AnswerNames.NO_ASIAN); 
+then
+	System.out.println("ENJOYCRATES");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_ENJOYCRATES),new Answer(AnswerNames.NO_ENJOYCRATES)));
+	
+	Question q = new Question("Do you enjoy crafting crates?", answers_tmp);
+	insert(q);
+end
+
+rule "Want to spend two weeks on two seconds"
+when
+	not Answer(answer == AnswerNames.YES_SPENDWEEKSONSECONDS);
+	not Answer(answer == AnswerNames.NO_SPENDWEEKSONSECONDS);
+	Answer(answer == AnswerNames.NO_PROPERARTIST); 
+then
+	System.out.println("SPENDWEEKSONSECONDS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_SPENDWEEKSONSECONDS),new Answer(AnswerNames.NO_SPENDWEEKSONSECONDS)));
+	
+	Question q = new Question("Want to spend two weeks on two seconds?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you like to work with unfinished tools"
+when
+	not Answer(answer == AnswerNames.YES_WORKUNFINISHEDTOOLS);
+	not Answer(answer == AnswerNames.NO_WORKUNFINISHEDTOOLS);
+	Answer(answer == AnswerNames.NO_VISUALLYORIENTED); 
+then
+	System.out.println("WORKUNFINISHEDTOOLS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_WORKUNFINISHEDTOOLS),new Answer(AnswerNames.NO_WORKUNFINISHEDTOOLS)));
+	
+	Question q = new Question("Do you like to work with unfinished tools?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you speak Spreadsheet"
+when
+	not Answer(answer == AnswerNames.YES_SPEAKSPREADSHEET);
+	not Answer(answer == AnswerNames.NO_SPEAKSPREADSHEET);
+	Answer(answer == AnswerNames.NO_WORKUNFINISHEDTOOLS); 
+then
+	System.out.println("SPEAKSPREADSHEET");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_SPEAKSPREADSHEET),new Answer(AnswerNames.NO_SPEAKSPREADSHEET)));
+	
+	Question q = new Question("Do you speak Spreadsheet?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you want to be told what to do"
+when
+	not Answer(answer == AnswerNames.YES_TOLDWHATTODO);
+	not Answer(answer == AnswerNames.NO_TOLDWHATTODO);
+	Answer(answer == AnswerNames.YES_SPEAKSPREADSHEET); 
+then
+	System.out.println("TOLDWHATTODO");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_TOLDWHATTODO),new Answer(AnswerNames.NO_TOLDWHATTODO)));
+	
+	Question q = new Question("Do you want to be told what to do?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you obsess excessively over even the tiniest details"
+when
+	not Answer(answer == AnswerNames.YES_OBSESSOVERDETAIL);
+	not Answer(answer == AnswerNames.NO_OBSESSOVERDETAIL);
+	Answer(answer == AnswerNames.YES_TOLDWHATTODO); 
+then
+	System.out.println("OBSESSOVERDETAIL");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_OBSESSOVERDETAIL),new Answer(AnswerNames.NO_OBSESSOVERDETAIL)));
+	
+	Question q = new Question("Do you obsess excessively over even the tiniest details?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you have a fixiation on gore and blood"
+when
+	not Answer(answer == AnswerNames.YES_FIXIATIONGOREBLOOD);
+	not Answer(answer == AnswerNames.NO_FIXIATIONGOREBLOOD);
+	Answer(answer == AnswerNames.YES_OBSESSOVERDETAIL); 
+then
+	System.out.println("FIXIATIONGOREBLOOD");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_FIXIATIONGOREBLOOD),new Answer(AnswerNames.NO_FIXIATIONGOREBLOOD)));
+	
+	Question q = new Question("Do you have a fixiation on gore and blood?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you like to be alone"
+when
+	not Answer(answer == AnswerNames.YES_BEALONE);
+	not Answer(answer == AnswerNames.NO_BEALONE);
+	Answer(answer == AnswerNames.NO_MINDUNDERAPPRECIATED); 
+then
+	System.out.println("BEALONE");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_BEALONE),new Answer(AnswerNames.NO_BEALONE)));
+	
+	Question q = new Question("Do you like to be alone?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you musical"
+when
+	not Answer(answer == AnswerNames.YES_MUSICAL);
+	not Answer(answer == AnswerNames.NO_MUSICAL);
+	Answer(answer == AnswerNames.YES_BEALONE); 
+then
+	System.out.println("MUSICAL");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_MUSICAL),new Answer(AnswerNames.NO_MUSICAL)));
+	
+	Question q = new Question("Are you musical?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you like to shoot or blow things up"
+when
+	not Answer(answer == AnswerNames.YES_BLOWTHINGS);
+	not Answer(answer == AnswerNames.NO_BLOWTHINGS);
+	Answer(answer == AnswerNames.YES_MUSICAL); 
+then
+	System.out.println("BLOWTHINGS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_BLOWTHINGS),new Answer(AnswerNames.NO_BLOWTHINGS)));
+	
+	Question q = new Question("Do you like to shoot or blow things up?", answers_tmp);
+	insert(q);
+end
+
+rule "Would you rather be in the movies"
+when
+	not Answer(answer == AnswerNames.YES_BEINMOVIES);
+	not Answer(answer == AnswerNames.NO_BEINMOVIES);
+	Answer(answer == AnswerNames.NO_BEALONE); 
+then
+	System.out.println("BEINMOVIES");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_BEINMOVIES),new Answer(AnswerNames.NO_BEINMOVIES)));
+	
+	Question q = new Question("Would you rather be in the movies?", answers_tmp);
+	insert(q);
+end
+
+rule "You a TV or movie celebrity"
+when
+	not Answer(answer == AnswerNames.YES_CELEBRITY);
+	not Answer(answer == AnswerNames.NO_CELEBRITY);
+	Answer(answer == AnswerNames.YES_BEINMOVIES); 
+then
+	System.out.println("CELEBRITY");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_CELEBRITY),new Answer(AnswerNames.NO_CELEBRITY)));
+	
+	Question q = new Question("You a TV or movie celebrity?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you young, caucasian and hot"
+when
+	not Answer(answer == AnswerNames.YES_YOUNGHOT);
+	not Answer(answer == AnswerNames.NO_YOUNGHOT);
+	Answer(answer == AnswerNames.NO_CELEBRITY); 
+then
+	System.out.println("YOUNGHOT");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_YOUNGHOT),new Answer(AnswerNames.NO_YOUNGHOT)));
+	
+	Question q = new Question("Are you young, caucasian and hot?", answers_tmp);
+	insert(q);
+end
+
+rule "Are you male"
+when
+	not Answer(answer == AnswerNames.YES_MALE);
+	not Answer(answer == AnswerNames.NO_MALE);
+	Answer(answer == AnswerNames.YES_YOUNGHOT); 
+then
+	System.out.println("MALE");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_MALE),new Answer(AnswerNames.NO_MALE)));
+	
+	Question q = new Question("Are you male?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you like arts and crafts"
+when
+	not Answer(answer == AnswerNames.YES_ARTSCRAFTS);
+	not Answer(answer == AnswerNames.NO_ARTSCRAFTS);
+	Answer(answer == AnswerNames.NO_MALE); 
+then
+	System.out.println("ARTSCRAFTS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_ARTSCRAFTS),new Answer(AnswerNames.NO_ARTSCRAFTS)));
+	
+	Question q = new Question("Do you like arts and crafts?", answers_tmp);
+	insert(q);
+end
+
+rule "Did you mind the errors in this graph"
+when
+	not Answer(answer == AnswerNames.YES_MINDERRORS);
+	not Answer(answer == AnswerNames.NO_MINDERRORS);
+	Answer(answer == AnswerNames.NO_BEINMOVIES); 
+then
+	System.out.println("MINDERRORS");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_MINDERRORS),new Answer(AnswerNames.NO_MINDERRORS)));
+	
+	Question q = new Question("Did you mind the errors in this graph?", answers_tmp);
+	insert(q);
+end
+
+rule "Do you want to chose who to hang out with"
+when
+	not Answer(answer == AnswerNames.YES_CHOSEWHOHANGOUT);
+	not Answer(answer == AnswerNames.NO_CHOSEWHOHANGOUT);
+	Answer(answer == AnswerNames.NO_MINDERRORS); 
+then
+	System.out.println("CHOSEWHOHANGOUT");
+	ArrayList<Answer> answers_tmp = new ArrayList<Answer>(asList(new Answer(AnswerNames.YES_CHOSEWHOHANGOUT),new Answer(AnswerNames.NO_CHOSEWHOHANGOUT)));
+	
+	Question q = new Question("Do you want to chose who to hang out with?", answers_tmp);
+	insert(q);
+end
+
+rule "Game Critic"
+when
+	Answer(answer == AnswerNames.YES_BITTER);
+then
+	System.out.println("You should be Game Critic!");
+	Result r = new Result("You should be Game Critic!"); 
+	insert(r);
+end
